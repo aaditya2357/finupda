@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: finai-advisor
+    env: node
+    buildCommand: npm install && chmod +x ./build-fix.sh && ./build-fix.sh
+    startCommand: NODE_ENV=production node dist/index.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: VITE_FIREBASE_API_KEY
+        sync: false
+      - key: VITE_FIREBASE_APP_ID
+        sync: false
+      - key: VITE_FIREBASE_PROJECT_ID
+        sync: false
+    autoDeploy: true
