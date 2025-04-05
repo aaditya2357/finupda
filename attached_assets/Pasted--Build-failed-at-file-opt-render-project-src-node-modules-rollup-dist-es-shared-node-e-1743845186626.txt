@@ -1,0 +1,36 @@
+==> Build failed 😞
+    at file:///opt/render/project/src/node_modules/rollup/dist/es/shared/node-entry.js:20025:26
+    at ModuleLoader.handleInvalidResolvedId (file:///opt/render/project/src/node_modules/rollup/dist/es/shared/node-entry.js:20067:26)
+    at Object.logger [as onLog] (file:///opt/render/project/src/node_modules/rollup/dist/es/shared/node-entry.js:21178:9)
+    at file:///opt/render/project/src/node_modules/rollup/dist/es/shared/node-entry.js:19452:13
+    at onwarn (file:///opt/render/project/src/node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:65442:7)
+    at onRollupWarning (file:///opt/render/project/src/node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:65777:5)
+    at onwarn (file:///opt/render/project/src/node_modules/@vitejs/plugin-react/dist/index.mjs:280:9)
+    at viteWarn (file:///opt/render/project/src/node_modules/vite/dist/node/chunks/dep-CHZK6zbr.js:65747:17)
+`build.rollupOptions.external`
+If you do want to externalize this module explicitly add it to
+This is most likely unintended because it can break your application at runtime.
+[vite]: Rollup failed to resolve import "/src/main.tsx" from "/opt/render/project/src/client/index.html".
+error during build:
+x Build failed in 54ms
+✓ 2 modules transformed.
+transforming...
+vite v5.4.14 building for production...
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+> rest-express@1.0.0 build
+Run `npm audit` for details.
+  npm audit fix --force
+To address all issues (including breaking changes), run:
+  npm audit fix
+To address issues that do not require attention, run:
+8 moderate severity vulnerabilities
+  run `npm fund` for details
+61 packages are looking for funding
+added 563 packages, and audited 564 packages in 14s
+==> Running build command 'npm install && npm run build'...
+==> Docs on specifying a bun version: https://render.com/docs/bun-version
+==> Using Bun version 1.1.0 (default)
+==> Docs on specifying a Node.js version: https://render.com/docs/node-version
+==> Using Node.js version 22.14.0 (default)
+==> Checking out commit 8e8a791fcdc907783dd91ed2a437dafef0c3f42b in branch main
+==> Cloning from https://github.com/aaditya2357/fin

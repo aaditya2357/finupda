@@ -1,0 +1,2928 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FinAI - Your Intelligent Financial Assistant</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      :root {
+        --primary: #1e3c72;
+        --primary-light: #2a5298;
+        --secondary: #f8fafc;
+        --accent: #3b82f6;
+        --text: #334155;
+        --text-light: #64748b;
+      }
+
+      /* Dark mode variables */
+      .dark-mode {
+        --primary: #3b82f6;
+        --primary-light: #2563eb;
+        --secondary: #1e293b;
+        --accent: #60a5fa;
+        --text: #e2e8f0;
+        --text-light: #94a3b8;
+        background-color: #0f172a;
+        color: var(--text);
+      }
+
+      .dark-mode .top-bar {
+        background-color: #1e293b;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .dark-mode .dashboard-item {
+        background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+        color: var(--text);
+      }
+
+      .dark-mode .discussion-card,
+      .dark-mode .ai-chatbox,
+      .dark-mode .info-container,
+      .dark-mode .modal {
+        background-color: #1e293b;
+        border-color: #334155;
+        color: var(--text);
+      }
+
+      .dark-mode .chatbox-messages {
+        background-color: #0f172a;
+      }
+
+      .dark-mode .community-modal textarea,
+      .dark-mode .login-input,
+      .dark-mode .chatbox-input input {
+        background-color: #1e293b;
+        border-color: #334155;
+        color: var(--text);
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f1f5f9;
+        color: var(--text);
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+        overflow-x: hidden;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      /* Smooth scroll behavior */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Animation classes */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      .animate-float {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      .animate-fade-in {
+        animation: fadeInUp 0.8s ease-out forwards;
+      }
+
+      .delay-100 {
+        animation-delay: 0.1s;
+      }
+      .delay-200 {
+        animation-delay: 0.2s;
+      }
+      .delay-300 {
+        animation-delay: 0.3s;
+      }
+
+      /* Hero section */
+      .hero-section {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        color: white;
+        padding: 100px 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 25px;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
+
+      @media (min-width: 992px) {
+        .hero-content {
+          flex-direction: row;
+          align-items: center;
+        }
+      }
+
+      .hero-text {
+        flex: 1;
+        z-index: 2;
+      }
+
+      .hero-image {
+        flex: 1;
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      .hero-title {
+        font-size: 48px;
+        font-weight: 700;
+        margin-bottom: 20px;
+        line-height: 1.2;
+      }
+
+      .hero-subtitle {
+        font-size: 20px;
+        margin-bottom: 30px;
+        opacity: 0.9;
+        line-height: 1.6;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      .hero-btn {
+        background: white;
+        color: var(--primary);
+        padding: 14px 32px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .hero-btn.outline {
+        background: transparent;
+        color: white;
+        border: 2px solid white;
+      }
+
+      .hero-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .hero-btn.outline:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      /* Market Ticker */
+      .market-ticker {
+        background: rgba(0, 0, 0, 0.2);
+        padding: 12px 0;
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+      }
+
+      .ticker-content {
+        display: inline-block;
+        animation: ticker 60s linear infinite;
+      }
+
+      @keyframes ticker {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+      }
+
+      .ticker-item {
+        display: inline-block;
+        margin: 0 30px;
+        color: white;
+        font-weight: 500;
+      }
+
+      .ticker-item .up {
+        color: #4ade80;
+      }
+
+      .ticker-item .down {
+        color: #f87171;
+      }
+
+      /* Trust Signals */
+      .trust-signals {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      }
+
+      .trust-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 15px;
+        opacity: 0.9;
+      }
+
+      /* Demo Video */
+      .demo-video-container {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        margin-top: 30px;
+      }
+
+      .demo-video {
+        width: 100%;
+        display: block;
+      }
+
+      .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.8);
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .play-button:hover {
+        background: white;
+        transform: translate(-50%, -50%) scale(1.1);
+      }
+
+      /* Top bar with subtle animation */
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        padding: 12px 30px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        transition: all 0.3s ease;
+      }
+
+      .top-bar.scrolled {
+        padding: 8px 30px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--primary);
+        gap: 12px;
+      }
+
+      .logo img {
+        height: 42px;
+        transition: all 0.3s;
+      }
+
+      .top-bar.scrolled .logo img {
+        height: 36px;
+      }
+
+      nav {
+        display: flex;
+        gap: 25px;
+        align-items: center;
+      }
+
+      nav a {
+        color: var(--primary);
+        text-decoration: none;
+        font-size: 17px;
+        font-weight: 500;
+        padding: 8px 12px;
+        transition: all 0.3s;
+        border-radius: 6px;
+        position: relative;
+      }
+
+      nav a:hover {
+        color: var(--primary-light);
+        background: rgba(30, 60, 114, 0.05);
+      }
+
+      nav a.active {
+        background: rgba(30, 60, 114, 0.1);
+      }
+
+      nav a::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: all 0.3s;
+        transform: translateX(-50%);
+      }
+
+      nav a:hover::after {
+        width: calc(100% - 24px);
+      }
+
+      /* Dark Mode Toggle */
+      .dark-toggle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        padding: 8px 12px;
+        border-radius: 6px;
+        transition: all 0.3s;
+      }
+
+      .dark-toggle:hover {
+        background: rgba(30, 60, 114, 0.05);
+      }
+
+      .toggle-switch {
+        position: relative;
+        width: 50px;
+        height: 24px;
+        background: #cbd5e1;
+        border-radius: 12px;
+        transition: all 0.3s;
+      }
+
+      .toggle-switch::after {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: white;
+        top: 2px;
+        left: 2px;
+        transition: all 0.3s;
+      }
+
+      .dark-mode .toggle-switch {
+        background: var(--primary);
+      }
+
+      .dark-mode .toggle-switch::after {
+        left: 28px;
+      }
+
+      .section {
+        margin: 80px auto;
+        max-width: 1200px;
+        padding: 0 25px;
+      }
+
+      .section-title {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 40px;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        position: relative;
+      }
+
+      .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: var(--primary);
+        border-radius: 2px;
+      }
+
+      .section-title i {
+        font-size: 28px;
+      }
+
+      /* Dashboard Section */
+      .dashboard {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+        background: white;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      }
+
+      .dashboard-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        padding: 30px 20px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        text-align: center;
+        min-height: 180px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .dashboard-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, rgba(30, 60, 114, 0.1) 0%, rgba(30, 60, 114, 0.05) 100%);
+        opacity: 0;
+        transition: all 0.4s ease;
+      }
+
+      .dashboard-item:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(30, 60, 114, 0.15);
+      }
+
+      .dashboard-item:hover::before {
+        opacity: 1;
+      }
+
+      .dashboard-item i {
+        font-size: 36px;
+        margin-bottom: 16px;
+        color: var(--primary);
+        transition: all 0.3s;
+      }
+
+      .dashboard-item:hover i {
+        transform: scale(1.1);
+      }
+
+      .dashboard-item-title {
+        font-weight: 600;
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+
+      .dashboard-item-value {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .dashboard-item-change {
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .up {
+        color: #4ade80;
+      }
+
+      .down {
+        color: #f87171;
+      }
+
+      .dashboard-item-chart {
+        width: 100%;
+        height: 60px;
+        margin-top: 10px;
+      }
+
+      .info-container {
+        display: none;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        margin-top: 30px;
+        animation: fadeIn 0.4s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Financial Advisory Section */
+      .financial-advisory {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--primary-light) 100%
+        );
+        color: white;
+        padding: 80px 40px;
+        border-radius: 16px;
+        margin: 60px auto;
+        box-shadow: 0 20px 40px rgba(30, 60, 114, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .financial-advisory::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 100%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+        transform: rotate(30deg);
+      }
+
+      .financial-content {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+      }
+
+      @media (min-width: 992px) {
+        .financial-content {
+          flex-direction: row;
+          align-items: center;
+        }
+      }
+
+      .financial-text {
+        flex: 1;
+      }
+
+      .financial-text h1 {
+        font-size: 42px;
+        font-weight: 700;
+        margin-bottom: 25px;
+        line-height: 1.3;
+      }
+
+      .financial-text p {
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 35px;
+        font-size: 18px;
+        line-height: 1.7;
+      }
+
+      .financial-chart {
+        flex: 1;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 30px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.4s ease;
+      }
+
+      .financial-chart:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .financial-btn {
+        background: white;
+        color: var(--primary);
+        padding: 14px 32px;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .financial-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      /* AI Chatbox Section */
+      .ai-chatbox {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        height: 550px;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #e2e8f0;
+        transition: all 0.4s ease;
+      }
+
+      .ai-chatbox:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+      }
+
+      .chatbox-header {
+        background: var(--primary);
+        color: white;
+        padding: 20px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+      }
+
+      .chatbox-messages {
+        flex: 1;
+        padding: 25px;
+        overflow-y: auto;
+        background: #f8fafc;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .message {
+        max-width: 80%;
+        padding: 16px 20px;
+        border-radius: 18px;
+        line-height: 1.6;
+        position: relative;
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      .bot-message {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-bottom-left-radius: 5px;
+        align-self: flex-start;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
+
+      .user-message {
+        background: var(--primary);
+        color: white;
+        border-bottom-right-radius: 5px;
+        align-self: flex-end;
+      }
+
+      .chatbox-input {
+        display: flex;
+        padding: 20px;
+        background: white;
+        border-top: 1px solid #e2e8f0;
+        position: relative;
+      }
+
+      .chatbox-input input {
+        flex: 1;
+        padding: 16px 20px;
+        border: 1px solid #e2e8f0;
+        border-radius: 30px;
+        outline: none;
+        font-size: 16px;
+        transition: all 0.3s;
+      }
+
+      .chatbox-input input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+      }
+
+      .chatbox-input button {
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 52px;
+        height: 52px;
+        margin-left: 15px;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .chatbox-input button:hover {
+        background: var(--primary-light);
+        transform: scale(1.05);
+      }
+
+      .welcome-message {
+        text-align: center;
+        margin: auto;
+        color: var(--text-light);
+        padding: 30px;
+      }
+
+      .welcome-message h3 {
+        color: var(--primary);
+        margin-bottom: 15px;
+        font-size: 24px;
+      }
+
+      /* Voice Input Styles */
+      .voice-btn {
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 52px;
+        height: 52px;
+        margin-left: 15px;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .voice-btn:hover {
+        background: var(--primary-light);
+        transform: scale(1.05);
+      }
+
+      .voice-btn.listening {
+        background: #db4437;
+        animation: pulse 1.5s infinite;
+      }
+
+      @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+      }
+
+      .voice-status {
+        position: absolute;
+        bottom: 90px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(0,0,0,0.7);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 14px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: 10;
+      }
+
+      .voice-status.show {
+        opacity: 1;
+      }
+
+      /* Community Section */
+      .community-tabs {
+        display: flex;
+        border-bottom: 1px solid #e2e8f0;
+        margin-bottom: 30px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+      }
+
+      .community-tab {
+        padding: 14px 28px;
+        cursor: pointer;
+        border-bottom: 3px solid transparent;
+        transition: all 0.3s;
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      .community-tab.active {
+        border-bottom: 3px solid var(--primary);
+        color: var(--primary);
+        font-weight: 600;
+      }
+
+      .community-tab:hover:not(.active) {
+        background: #f8fafc;
+      }
+
+      .discussion-list {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+      }
+
+      .discussion-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 25px;
+        transition: all 0.4s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .discussion-card:hover {
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        transform: translateY(-5px);
+        border-color: #cbd5e1;
+      }
+
+      .discussion-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+
+      .discussion-avatar {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--primary);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        font-weight: 600;
+        font-size: 18px;
+      }
+
+      .discussion-author {
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      .discussion-time {
+        color: var(--text-light);
+        font-size: 14px;
+        margin-left: 15px;
+      }
+
+      .discussion-title {
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: var(--text);
+        font-size: 20px;
+      }
+
+      .discussion-content {
+        color: var(--text-light);
+        margin-bottom: 16px;
+        line-height: 1.6;
+      }
+
+      .discussion-stats {
+        display: flex;
+        gap: 25px;
+        color: var(--text-light);
+        font-size: 15px;
+      }
+
+      .discussion-stat {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .new-discussion {
+        background: var(--primary);
+        color: white;
+        padding: 14px 28px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 30px;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        font-weight: 500;
+        border: none;
+        font-size: 16px;
+      }
+
+      .new-discussion:hover {
+        background: var(--primary-light);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(30, 60, 114, 0.2);
+      }
+
+      /* New Unique Value Section */
+      .unique-value {
+        background: white;
+        border-radius: 16px;
+        padding: 80px 40px;
+        margin: 80px auto;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .unique-value::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('https://images.unsplash.com/photo-1450101499163-c8848c66ca85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') center/cover;
+        opacity: 0.03;
+        z-index: 0;
+      }
+
+      .unique-value-content {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .unique-value h2 {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 25px;
+        color: var(--primary);
+        line-height: 1.3;
+      }
+
+      .unique-value p {
+        color: var(--text-light);
+        font-size: 18px;
+        line-height: 1.7;
+        margin-bottom: 35px;
+      }
+
+      /* New Life Between Section */
+      .life-between {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        border-radius: 16px;
+        padding: 80px 40px;
+        margin: 80px auto;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .life-between-content {
+        max-width: 800px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
+
+      .life-between h2 {
+        font-size: 36px;
+        font-weight: 700;
+        margin-bottom: 25px;
+        color: var(--primary);
+        line-height: 1.3;
+      }
+
+      .life-between p {
+        color: var(--text-light);
+        font-size: 18px;
+        line-height: 1.7;
+        margin-bottom: 35px;
+      }
+
+      /* Modals */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        z-index: 999;
+        animation: fadeIn 0.3s ease-out;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        width: 90%;
+        max-width: 500px;
+        max-height: 90vh;
+        overflow-y: auto;
+        animation: modalFadeIn 0.3s ease-out;
+      }
+
+      @keyframes modalFadeIn {
+        from {
+          opacity: 0;
+          transform: translate(-50%, -45%);
+        }
+        to {
+          opacity: 1;
+          transform: translate(-50%, -50%);
+        }
+      }
+
+      .modal h2 {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 25px;
+        color: var(--primary);
+      }
+
+      .login-options {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 25px;
+      }
+
+      .login-options button {
+        padding: 14px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        transition: all 0.3s;
+        font-size: 16px;
+      }
+
+      .login-options button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .google {
+        background: #db4437;
+        color: white;
+      }
+      .apple {
+        background: #000;
+        color: white;
+      }
+      .facebook {
+        background: #3b5998;
+        color: white;
+      }
+
+      .login-input {
+        width: 100%;
+        padding: 16px;
+        margin: 15px 0;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        transition: all 0.3s;
+        font-size: 16px;
+      }
+
+      .login-input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+      }
+
+      /* Community Modal */
+      .community-modal textarea {
+        width: 100%;
+        min-height: 200px;
+        padding: 16px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        resize: vertical;
+        font-family: "Poppins", sans-serif;
+        font-size: 16px;
+        transition: all 0.3s;
+      }
+
+      .community-modal textarea:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+      }
+
+      .community-modal-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+      }
+
+      .community-modal-cancel {
+        background: #f1f5f9;
+        color: var(--text);
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s;
+        border: none;
+      }
+
+      .community-modal-cancel:hover {
+        background: #e2e8f0;
+      }
+
+      .community-modal-submit {
+        background: var(--primary);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: all 0.3s;
+        border: none;
+      }
+
+      .community-modal-submit:hover {
+        background: var(--primary-light);
+      }
+
+      /* Footer */
+      .footer {
+        background: var(--primary);
+        color: white;
+        padding: 60px 0 40px;
+        margin-top: 80px;
+      }
+
+      .footer-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 25px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 50px;
+      }
+
+      .footer-column h3 {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 12px;
+      }
+
+      .footer-column h3::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.5);
+      }
+
+      .footer-column ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .footer-column li {
+        margin-bottom: 15px;
+      }
+
+      .footer-column a {
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: all 0.3s;
+        font-size: 16px;
+      }
+
+      .footer-column a:hover {
+        color: white;
+        padding-left: 8px;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 40px;
+        margin-top: 40px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 15px;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      /* Modal Close Button */
+      .modal-close {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        font-size: 32px;
+        font-weight: bold;
+        color: var(--primary);
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .modal-close:hover {
+        color: var(--primary-light);
+        transform: scale(1.1);
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 992px) {
+        .hero-title {
+          font-size: 36px;
+        }
+        
+        .hero-subtitle {
+          font-size: 18px;
+        }
+        
+        .financial-text h1 {
+          font-size: 32px;
+        }
+        
+        .section-title {
+          font-size: 30px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .top-bar {
+          flex-direction: column;
+          padding: 15px;
+          gap: 15px;
+        }
+
+        nav {
+          width: 100%;
+          justify-content: center;
+          flex-wrap: wrap;
+          gap: 10px;
+        }
+
+        .section-title {
+          font-size: 28px;
+        }
+
+        .financial-text h1 {
+          font-size: 28px;
+        }
+        
+        .chatbox-input {
+          padding: 15px;
+        }
+        
+        .chatbox-input button,
+        .voice-btn {
+          width: 48px;
+          height: 48px;
+          margin-left: 10px;
+        }
+        
+        .hero-title {
+          font-size: 32px;
+        }
+        
+        .hero-subtitle {
+          font-size: 16px;
+        }
+        
+        .hero-buttons {
+          flex-direction: column;
+        }
+        
+        .hero-btn {
+          width: 100%;
+          justify-content: center;
+        }
+        
+        .unique-value h2,
+        .life-between h2 {
+          font-size: 28px;
+        }
+        
+        .unique-value p,
+        .life-between p {
+          font-size: 16px;
+        }
+
+        .trust-signals {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 15px;
+        }
+      }
+
+      .separator {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 25px 0;
+        color: var(--text-light);
+        font-size: 15px;
+      }
+
+      .separator::before,
+      .separator::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid #e2e8f0;
+      }
+
+      .separator::before {
+        margin-right: 15px;
+      }
+
+      .separator::after {
+        margin-left: 15px;
+      }
+
+      /* Loading spinner */
+      .fa-spinner {
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top-bar">
+      <div class="logo">
+        <img
+          src="https://via.placeholder.com/42x42/1e3c72/ffffff?text=FA"
+          alt="FinAI Logo"
+        />
+        <span>FinAI</span>
+      </div>
+      <nav>
+        <a href="#dashboard" class="active"
+          ><i class="fas fa-chart-line"></i> Dashboard</a
+        >
+        <a href="#ai-chatbox"><i class="fas fa-robot"></i> AI Assistant</a>
+        <a href="#community"><i class="fas fa-users"></i> Community</a>
+        <a href="#" onclick="openModal()"
+          ><i class="fas fa-sign-in-alt"></i> Login</a
+        >
+        <div class="dark-toggle" id="darkModeToggle">
+          <i class="fas fa-moon"></i>
+          <div class="toggle-switch"></div>
+        </div>
+      </nav>
+    </div>
+
+    <!-- New Hero Section -->
+    <section class="hero-section">
+      <div class="market-ticker">
+        <div class="ticker-content">
+          <span class="ticker-item">S&P 500 <span class="up">▲ 4,567.89 (+1.2%)</span></span>
+          <span class="ticker-item">NASDAQ <span class="up">▲ 14,210.34 (+0.8%)</span></span>
+          <span class="ticker-item">DOW <span class="down">▼ 34,567.12 (-0.3%)</span></span>
+          <span class="ticker-item">GOLD <span class="up">▲ $1,987.50 (+0.5%)</span></span>
+          <span class="ticker-item">BITCOIN <span class="up">▲ $42,345.67 (+3.2%)</span></span>
+        </div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-text animate-fade-in">
+          <h1 class="hero-title">Your Intelligent Financial Assistant</h1>
+          <p class="hero-subtitle">
+            FinAI combines the power of artificial intelligence with financial expertise 
+            to help you make smarter decisions about your money.
+          </p>
+          <div class="hero-buttons">
+            <button class="hero-btn" onclick="openFinancialForm()">
+              <i class="fas fa-rocket"></i> Get Started
+            </button>
+            <button class="hero-btn outline" onclick="document.querySelector('#ai-chatbox').scrollIntoView({ behavior: 'smooth' })">
+              <i class="fas fa-comments"></i> Try AI Assistant
+            </button>
+          </div>
+          <div class="trust-signals">
+            <div class="trust-item">
+              <i class="fas fa-check-circle"></i> Age specific Guidance
+            </div>
+            <div class="trust-item">
+              <i class="fas fa-shield-alt"></i> Bank-level security
+            </div>
+            <div class="trust-item">
+              <i class="fas fa-star"></i> Future of Finance with AI
+            </div>
+          </div>
+        </div>
+        <div class="hero-image animate-fade-in delay-100">
+          <div class="demo-video-container">
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1511&q=80" alt="Financial planning" class="demo-video">
+            <div class="play-button" onclick="playDemoVideo()">
+              <i class="fas fa-play" style="color: var(--primary); font-size: 24px; margin-left: 3px;"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section" id="dashboard">
+      <h2 class="section-title">
+        <i class="fas fa-chart-line"></i>
+        Information Dashboard
+      </h2>
+      <div class="dashboard">
+        <div class="dashboard-item" onclick="showInfo('Market Trends')">
+          <i class="fas fa-chart-line"></i>
+          <div class="dashboard-item-title">Market Trends</div>
+          <div class="dashboard-item-value">$4,567.89 <span class="up">▲ 1.2%</span></div>
+          <div class="dashboard-item-change"><span class="up">▲ 54.32</span> Today</div>
+          <div class="dashboard-item-chart">
+            <canvas id="marketTrendsChart"></canvas>
+          </div>
+        </div>
+        <div class="dashboard-item" onclick="showInfo('Stock Analysis')">
+          <i class="fas fa-dollar-sign"></i>
+          <div class="dashboard-item-title">Stock Analysis</div>
+          <div class="dashboard-item-value">$142.56 <span class="down">▼ 0.8%</span></div>
+          <div class="dashboard-item-change"><span class="down">▼ 1.15</span> Today</div>
+          <div class="dashboard-item-chart">
+            <canvas id="stockAnalysisChart"></canvas>
+          </div>
+        </div>
+        <div class="dashboard-item" onclick="showInfo('Investment Strategies')">
+          <i class="fas fa-hand-holding-usd"></i>
+          <div class="dashboard-item-title">Investment Strategies</div>
+          <div class="dashboard-item-value">+8.5%</div>
+          <div class="dashboard-item-change">YTD Return</div>
+          <div class="dashboard-item-chart">
+            <canvas id="investmentChart"></canvas>
+          </div>
+        </div>
+        <div class="dashboard-item" onclick="showInfo('Portfolio Management')">
+          <i class="fas fa-briefcase"></i>
+          <div class="dashboard-item-title">Portfolio Management</div>
+          <div class="dashboard-item-value">$24,567</div>
+          <div class="dashboard-item-change"><span class="up">▲ 3.2%</span> This month</div>
+          <div class="dashboard-item-chart">
+            <canvas id="portfolioChart"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="info-container" id="info-container"></div>
+    </div>
+
+    <section class="financial-advisory" id="financial-advisory">
+      <div class="financial-content">
+        <div class="financial-text">
+          <h1>Make Financial Data a Story Worth Telling</h1>
+          <p>
+            FinanceGPT combines the power of generative AI with financial data,
+            charts, and expert knowledge to empower your financial
+            decision-making.
+          </p>
+          <button class="financial-btn" onclick="openFinancialForm()">
+            <i class="fas fa-rocket"></i> Get Started
+          </button>
+        </div>
+        <div class="financial-chart">
+          <canvas id="financialChart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- New Unique Value Section -->
+    <section class="unique-value">
+      <div class="unique-value-content">
+        <h2>You're not like everyone else<br>Neither are your finances</h2>
+        <p>
+          We'll work with you to understand not just your goals, but your challenges, and 
+          your habits, and make sure we help you put it all into perspective. Life is complex 
+          enough, your finances don't have to be. We're here to make it simple to master.
+        </p>
+        <button class="financial-btn" onclick="document.querySelector('#community').scrollIntoView({ behavior: 'smooth' })">
+          <i class="fas fa-users"></i> Join Our Community
+        </button>
+      </div>
+    </section>
+
+    <div class="section" id="ai-chatbox">
+      <h2 class="section-title">
+        <i class="fas fa-robot"></i>
+        FinAI Assistant
+      </h2>
+      <div class="ai-chatbox">
+        <div class="chatbox-header">
+          <i class="fas fa-comments"></i>
+          Financial AI Assistant
+        </div>
+        <div class="chatbox-messages" id="chatboxMessages">
+          <div class="welcome-message">
+            <h3>Welcome to FinAI Assistant</h3>
+            <p>
+              Ask me about investments, market trends, or financial planning
+            </p>
+            <p>This interface will connect to our AI model when ready</p>
+          </div>
+        </div>
+        <div class="chatbox-input">
+          <input
+            type="text"
+            id="chatboxInput"
+            placeholder="Type your financial question here..."
+            autocomplete="off"
+          />
+          <button id="chatboxSend"><i class="fas fa-paper-plane"></i></button>
+          <button id="voiceInputButton" class="voice-btn">
+            <i class="fas fa-microphone"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Life Between Section -->
+    <section class="life-between">
+      <div class="life-between-content">
+        <h2>Life is what happens in between financial plans</h2>
+        <p>
+          We'll do everything we can to get you to your goals. That means we'll also be there 
+          for all the other wonderful, stressful, exciting, scary stuff in your life that you 
+          can't always plan. It's financial guidance for your life and everything in between.
+        </p>
+        <button class="financial-btn" onclick="openFinancialForm()">
+          <i class="fas fa-hand-holding-usd"></i> Get Personalized Advice
+        </button>
+      </div>
+    </section>
+
+    <div class="section" id="community">
+      <h2 class="section-title">
+        <i class="fas fa-users"></i>
+        FinAI Community
+      </h2>
+
+      <div class="community-tabs">
+        <div class="community-tab active">Recent Discussions</div>
+        <div class="community-tab">Popular</div>
+        <div class="community-tab">Investment Tips</div>
+        <div class="community-tab">Market News</div>
+        <div class="community-tab">Retirement</div>
+        <div class="community-tab">Tax Strategies</div>
+      </div>
+
+      <div class="discussion-list">
+        <!-- Discussion Card 1 -->
+        <div class="discussion-card">
+          <div class="discussion-header">
+            <div class="discussion-avatar">AD</div>
+            <div>
+              <span class="discussion-author">Aditya</span>
+              <span class="discussion-time">2 hours ago</span>
+            </div>
+          </div>
+          <div class="discussion-title">
+            Best long-term investment strategies for 2024
+          </div>
+          <div class="discussion-content">
+            I'm looking to diversify my portfolio with some long-term
+            investments. What sectors are showing the most promise for the next
+            5-10 years? I'm particularly interested in technology and renewable
+            energy but want to hear other perspectives.
+          </div>
+          <div class="discussion-stats">
+            <div class="discussion-stat">
+              <i class="fas fa-comment"></i> 14 replies
+            </div>
+            <div class="discussion-stat">
+              <i class="fas fa-heart"></i> 28 likes
+            </div>
+            <div class="discussion-stat">
+              <i class="fas fa-eye"></i> 156 views
+            </div>
+          </div>
+        </div>
+
+        <!-- Discussion Card 2 -->
+        <div class="discussion-card">
+          <div class="discussion-header">
+            <div class="discussion-avatar">P</div>
+            <div>
+              <span class="discussion-author">Palak</span>
+              <span class="discussion-time">1 day ago</span>
+            </div>
+          </div>
+          <div class="discussion-title">
+            How to analyze stock fundamentals properly?
+          </div>
+          <div class="discussion-content">
+            I'm new to stock investing and want to learn how to properly analyze
+            company fundamentals. What metrics should I be looking at first? Any
+            good resources for beginners? I've heard about P/E ratios and EBITDA
+            but not sure how to interpret them.
+          </div>
+          <div class="discussion-stats">
+            <div class="discussion-stat">
+              <i class="fas fa-comment"></i> 22 replies
+            </div>
+            <div class="discussion-stat">
+              <i class="fas fa-heart"></i> 45 likes
+            </div>
+            <div class="discussion-stat">
+              <i class="fas fa-eye"></i> 320 views
+            </div>
+          </div>
+        </div>
+
+        <!-- Discussion Card 3 -->
+        <div class="discussion-card">
+          <div class="discussion-header">
+            <div class="discussion-avatar">AN</div>
+            <div>
+              <span class="discussion-author">Anay</span>
+              <span class="discussion-time">3 days ago</span>
+            </div>
+          </div>
+          <div class="discussion-title">
+            Market downturn protection strategies
+          </div>
+          <div class="discussion-content">
+            With the current economic uncertainty, what are some good strategies
+            to protect my portfolio from a potential market downturn? I'm
+            considering increasing my bond allocation but wondering about other
+            options like gold or defensive stocks.
+          </div>
+          <div class="discussion-stats">
+            <div class="discussion-stat">
+              <i class="fas fa-comment"></i> 37 replies
+            </div>
+            <div class="discussion-stat">
+              <i class="fas fa-heart"></i> 62 likes
+            </div>
+            <div class="discussion-stat">
+              <i class="fas fa-eye"></i> 489 views
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="new-discussion" id="newDiscussionBtn">
+        <i class="fas fa-plus"></i> Start New Discussion
+      </button>
+    </div>
+
+    <!-- Community Modal -->
+    <div class="modal-overlay" id="communityModalOverlay"></div>
+    <div class="modal community-modal" id="communityModal">
+      <h2>Start New Discussion</h2>
+      <input
+        type="text"
+        class="login-input"
+        placeholder="Discussion Title"
+        id="discussionTitle"
+      />
+      <textarea
+        placeholder="What would you like to discuss? Be specific to get better responses..."
+        id="discussionContent"
+      ></textarea>
+      <div class="community-modal-actions">
+        <button class="community-modal-cancel" id="cancelDiscussion">
+          Cancel
+        </button>
+        <button class="community-modal-submit" id="submitDiscussion">
+          Post Discussion
+        </button>
+      </div>
+    </div>
+
+    <!-- Financial Advisory Modal (Updated with working submit button) -->
+    <div class="modal-overlay" id="financialModalOverlay"></div>
+    <div class="modal" id="financialModal">
+      <span class="modal-close" onclick="closeFinancialForm()">&times;</span>
+      <h2>Get Financial Advice</h2>
+      <input
+        type="text"
+        class="login-input"
+        placeholder="Your Name"
+        id="financialName"
+        required
+      />
+      <input
+        type="email"
+        class="login-input"
+        placeholder="Email Address"
+        id="financialEmail"
+        required
+      />
+      <input
+        type="number"
+        class="login-input"
+        placeholder="Your Age"
+        id="financialAge"
+        min="18"
+        max="100"
+        required
+      />
+      <select class="login-input" id="financialTopic" required>
+        <option value="">Select advice topic</option>
+        <option value="investments">Investments</option>
+        <option value="retirement">Retirement Planning</option>
+        <option value="tax">Tax Strategies</option>
+        <option value="savings">Savings & Budgeting</option>
+      </select>
+      <textarea
+        class="login-input"
+        placeholder="Describe your financial situation and goals..."
+        id="financialDetails"
+        style="min-height: 120px"
+        required
+      ></textarea>
+      <button
+        class="financial-btn"
+        style="width: 100%; margin-top: 15px"
+        id="submitFinancial"
+      >
+        Get Personalized Advice
+      </button>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal" id="loginModal">
+      <span class="modal-close" onclick="closeModal()">&times;</span>
+      <h2>Login to FinAI</h2>
+
+      <!-- Email/Password Form -->
+      <form id="emailLoginForm">
+        <input
+          type="email"
+          class="login-input"
+          id="loginEmail"
+          placeholder="Email address"
+          required
+          autocomplete="username"
+        />
+        <input
+          type="password"
+          class="login-input"
+          id="loginPassword"
+          placeholder="Password"
+          required
+          autocomplete="current-password"
+        />
+        <button type="submit" class="financial-btn" style="width: 100%">
+          <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+      </form>
+
+      <div class="separator">or continue with</div>
+
+      <!-- OAuth Providers -->
+      <div class="login-options">
+        <button class="google" id="googleLogin" onclick="initiateGoogleLogin()">
+          <i class="fab fa-google"></i> Google
+        </button>
+        <button class="apple" id="appleLogin" onclick="initiateAppleLogin()">
+          <i class="fab fa-apple"></i> Apple
+        </button>
+        <button
+          class="facebook"
+          id="facebookLogin"
+          onclick="initiateFacebookLogin()"
+        >
+          <i class="fab fa-facebook-f"></i> Facebook
+        </button>
+      </div>
+
+      <div style="text-align: center; margin-top: 20px">
+        <a
+          href="#"
+          onclick="showForgotPassword()"
+          style="color: var(--primary); text-decoration: none"
+        >
+          Forgot password?
+        </a>
+        <span style="margin: 0 10px">|</span>
+        <a
+          href="#"
+          onclick="showSignupForm()"
+          style="color: var(--primary); text-decoration: none"
+        >
+          Create account
+        </a>
+      </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal" id="forgotPasswordModal">
+      <span class="modal-close" onclick="closeForgotPassword()">&times;</span>
+      <h2>Reset Password</h2>
+      <form id="forgotPasswordForm">
+        <p>Enter your email to receive a password reset link</p>
+        <input
+          type="email"
+          class="login-input"
+          id="resetEmail"
+          placeholder="Your email address"
+          required
+        />
+        <button type="submit" class="financial-btn" style="width: 100%">
+          <i class="fas fa-paper-plane"></i> Send Reset Link
+        </button>
+      </form>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+      <span class="modal-close" onclick="closeSignupForm()">&times;</span>
+      <h2>Create Account</h2>
+      <form id="signupForm">
+        <input
+          type="text"
+          class="login-input"
+          id="signupName"
+          placeholder="Full Name"
+          required
+        />
+        <input
+          type="email"
+          class="login-input"
+          id="signupEmail"
+          placeholder="Email address"
+          required
+        />
+        <input
+          type="password"
+          class="login-input"
+          id="signupPassword"
+          placeholder="Create password"
+          required
+          minlength="8"
+        />
+        <input
+          type="password"
+          class="login-input"
+          id="signupConfirmPassword"
+          placeholder="Confirm password"
+          required
+        />
+        <div style="margin: 15px 0">
+          <input type="checkbox" id="termsAgree" required />
+          <label for="termsAgree" style="font-size: 14px">
+            I agree to the
+            <a href="#" style="color: var(--primary)">Terms of Service</a> and
+            <a href="#" style="color: var(--primary)">Privacy Policy</a>
+          </label>
+        </div>
+        <button type="submit" class="financial-btn" style="width: 100%">
+          <i class="fas fa-user-plus"></i> Create Account
+        </button>
+      </form>
+    </div>
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>FinAI</h3>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Features</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Resources</h3>
+          <ul>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Guides</a></li>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">API Documentation</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Security</a></li>
+            <li><a href="#">Compliance</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Connect</h3>
+          <ul>
+            <li>
+              <a href="#"><i class="fab fa-twitter"></i> Twitter</a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+            </li>
+            <li>
+              <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">&copy; 2025 FinAI. All rights reserved.</div>
+    </footer>
+
+    <script src="https://appleid.cdn-apple.com/appleauth/static/jsapi/appleid/1/en_US/appleid.auth.js"></script>
+
+    <script>
+      // Initialize animations when elements come into view
+      function initAnimations() {
+        const elements = document.querySelectorAll('.section, .financial-advisory, .unique-value, .life-between');
+        
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('animate-fade-in');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1
+        });
+
+        elements.forEach(element => {
+          observer.observe(element);
+        });
+      }
+
+      // Dark Mode Toggle
+      const darkModeToggle = document.getElementById('darkModeToggle');
+      const body = document.body;
+
+      // Check for saved user preference
+      if (localStorage.getItem('darkMode') === 'enabled') {
+        body.classList.add('dark-mode');
+      }
+
+      darkModeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        
+        // Save user preference
+        if (body.classList.contains('dark-mode')) {
+          localStorage.setItem('darkMode', 'enabled');
+        } else {
+          localStorage.setItem('darkMode', 'disabled');
+        }
+      });
+
+      // Play Demo Video (placeholder function)
+      function playDemoVideo() {
+        alert('In a production environment, this would play a demo video showcasing the AI assistant in action.');
+      }
+
+      // Scroll event for header
+      window.addEventListener('scroll', function() {
+        const topBar = document.querySelector('.top-bar');
+        if (window.scrollY > 50) {
+          topBar.classList.add('scrolled');
+        } else {
+          topBar.classList.remove('scrolled');
+        }
+      });
+
+      // Dashboard Functionality
+      function showInfo(info) {
+        const infoContainer = document.getElementById("info-container");
+        const content = {
+          "Market Trends": `
+                          <h3>Current Market Trends</h3>
+                          <p>Global markets are showing mixed signals this quarter:</p>
+                          <ul>
+                              <li>Technology sector up 8.2% YTD</li>
+                              <li>Energy sector down 3.1% due to oil price fluctuations</li>
+                              <li>Emerging markets showing strong growth potential</li>
+                          </ul>
+                          <p>Our analysts recommend diversifying across sectors to mitigate risk.</p>
+                      `,
+          "Stock Analysis": `
+                          <h3>Stock Analysis Tools</h3>
+                          <p>Access our comprehensive stock analysis features:</p>
+                          <ul>
+                              <li>Real-time price tracking</li>
+                              <li>Fundamental analysis metrics</li>
+                              <li>Technical indicators and charts</li>
+                              <li>Historical performance data</li>
+                          </ul>
+                          <button class="financial-btn" style="margin-top: 15px;">Explore Stocks</button>
+                      `,
+          "Investment Strategies": `
+                          <h3>Investment Strategies</h3>
+                          <p>Based on your risk profile, we recommend:</p>
+                          <ul>
+                              <li>60% equities (diversified across sectors)</li>
+                              <li>30% fixed income</li>
+                              <li>10% alternative investments</li>
+                          </ul>
+                          <p>Consider dollar-cost averaging to enter positions gradually.</p>
+                      `,
+          "Portfolio Management": `
+                          <h3>Portfolio Management</h3>
+                          <p>Our portfolio management tools help you:</p>
+                          <ul>
+                              <li>Track your asset allocation</li>
+                              <li>Rebalance automatically</li>
+                              <li>Analyze performance vs. benchmarks</li>
+                              <li>Optimize for tax efficiency</li>
+                          </ul>
+                      `,
+        };
+
+        infoContainer.innerHTML =
+          content[info] ||
+          `<p>Information about ${info} will be displayed here.</p>`;
+        infoContainer.style.display = "block";
+      }
+
+      // Modal Functions
+      function openModal() {
+        document.getElementById("loginModal").style.display = "block";
+        document.getElementById("modalOverlay").style.display = "block";
+      }
+
+      function closeModal() {
+        document.getElementById("loginModal").style.display = "none";
+        document.getElementById("modalOverlay").style.display = "none";
+      }
+
+      function openFinancialForm() {
+        document.getElementById("financialModal").style.display = "block";
+        document.getElementById("financialModalOverlay").style.display =
+          "block";
+      }
+
+      function closeFinancialForm() {
+        document.getElementById("financialModal").style.display = "none";
+        document.getElementById("financialModalOverlay").style.display = "none";
+      }
+
+      // Financial Form Submission
+      document
+        .getElementById("submitFinancial")
+        .addEventListener("click", function () {
+          const name = document.getElementById("financialName").value.trim();
+          const email = document.getElementById("financialEmail").value.trim();
+          const age = parseInt(document.getElementById("financialAge").value);
+          const topic = document.getElementById("financialTopic").value;
+          const details = document
+            .getElementById("financialDetails")
+            .value.trim();
+
+          if (!name || !email || !topic || isNaN(age) || !details) {
+            alert("Please fill in all fields");
+            return;
+          }
+
+          if (age < 18) {
+            alert("You must be at least 18 years old to use this service.");
+            return;
+          }
+
+          // Validate email format
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            alert("Please enter a valid email address");
+            return;
+          }
+
+          // Here you would normally send the data to your backend
+          console.log("Financial advice request:", {
+            name,
+            email,
+            age,
+            topic,
+            details,
+          });
+
+          alert(
+            "Thank you for your submission! Our financial advisor will contact you soon."
+          );
+          closeFinancialForm();
+
+          // Clear the form
+          document.getElementById("financialName").value = "";
+          document.getElementById("financialEmail").value = "";
+          document.getElementById("financialAge").value = "";
+          document.getElementById("financialTopic").value = "";
+          document.getElementById("financialDetails").value = "";
+        });
+
+      // Community Modal Functions
+      const newDiscussionBtn = document.getElementById("newDiscussionBtn");
+      const communityModal = document.getElementById("communityModal");
+      const communityModalOverlay = document.getElementById(
+        "communityModalOverlay"
+      );
+      const cancelDiscussion = document.getElementById("cancelDiscussion");
+      const submitDiscussion = document.getElementById("submitDiscussion");
+
+      newDiscussionBtn.addEventListener("click", function () {
+        communityModal.style.display = "block";
+        communityModalOverlay.style.display = "block";
+      });
+
+      cancelDiscussion.addEventListener("click", function () {
+        communityModal.style.display = "none";
+        communityModalOverlay.style.display = "none";
+      });
+
+      submitDiscussion.addEventListener("click", function () {
+        const title = document.getElementById("discussionTitle").value.trim();
+        const content = document
+          .getElementById("discussionContent")
+          .value.trim();
+
+        if (title === "" || content === "") {
+          alert("Please enter both a title and content for your discussion");
+          return;
+        }
+
+        // In a real implementation, you would send this to your backend
+        console.log("New discussion:", { title, content });
+        alert("Discussion posted successfully!");
+
+        // Clear and close
+        document.getElementById("discussionTitle").value = "";
+        document.getElementById("discussionContent").value = "";
+        communityModal.style.display = "none";
+        communityModalOverlay.style.display = "none";
+      });
+
+      communityModalOverlay.addEventListener("click", function () {
+        communityModal.style.display = "none";
+        communityModalOverlay.style.display = "none";
+      });
+
+      // Tab switching
+      const tabs = document.querySelectorAll(".community-tab");
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", function () {
+          tabs.forEach((t) => t.classList.remove("active"));
+          this.classList.add("active");
+          // In a real implementation, you would load different content here
+        });
+      });
+
+      // Chatbox Functionality
+      const chatboxMessages = document.getElementById("chatboxMessages");
+      const chatboxInput = document.getElementById("chatboxInput");
+      const chatboxSend = document.getElementById("chatboxSend");
+
+      function addMessage(text, isUser) {
+        if (isUser && chatboxMessages.querySelector(".welcome-message")) {
+          chatboxMessages.innerHTML = "";
+        }
+
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `message ${
+          isUser ? "user-message" : "bot-message"
+        }`;
+        messageDiv.textContent = text;
+
+        chatboxMessages.appendChild(messageDiv);
+        chatboxMessages.scrollTop = chatboxMessages.scrollHeight;
+      }
+
+      function sendMessage() {
+        const text = chatboxInput.value.trim();
+        if (text === "") return;
+
+        addMessage(text, true);
+        chatboxInput.value = "";
+
+        // Placeholder response - replace with actual API call to your AI model
+        setTimeout(() => {
+          const responses = [
+            "I can provide insights on that once connected to our AI model. Currently this is a demonstration interface.",
+            "That's an excellent financial question. Our AI will be able to analyze this in detail when integrated.",
+            "For investment questions like this, our AI model will consider market trends, risk factors, and your portfolio when available.",
+            "This interface is ready to connect to our financial AI model. Real responses will be available soon!",
+            "Interesting question! Our AI will soon be able to provide personalized advice on topics like this.",
+          ];
+
+          const randomResponse =
+            responses[Math.floor(Math.random() * responses.length)];
+          addMessage(randomResponse, false);
+        }, 1000);
+      }
+
+      chatboxSend.addEventListener("click", sendMessage);
+      chatboxInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") sendMessage();
+      });
+
+      // Voice Input Functionality
+      const voiceInputButton = document.getElementById('voiceInputButton');
+      const voiceStatus = document.createElement('div');
+      voiceStatus.className = 'voice-status';
+      document.getElementById('chatboxMessages').appendChild(voiceStatus);
+
+      // Check for speech recognition support
+      if (!('webkitSpeechRecognition' in window)) {
+        voiceInputButton.style.display = 'none';
+      } else {
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognition();
+        
+        recognition.continuous = false;
+        recognition.interimResults = false;
+        recognition.lang = 'en-US';
+
+        voiceInputButton.addEventListener('click', function() {
+          if (voiceInputButton.classList.contains('listening')) {
+            recognition.stop();
+            voiceInputButton.classList.remove('listening');
+            voiceStatus.textContent = '';
+            voiceStatus.classList.remove('show');
+          } else {
+            recognition.start();
+            voiceInputButton.classList.add('listening');
+            voiceStatus.textContent = 'Listening...';
+            voiceStatus.classList.add('show');
+          }
+        });
+
+        recognition.onresult = function(event) {
+          const transcript = event.results[0][0].transcript;
+          document.getElementById('chatboxInput').value = transcript;
+          voiceStatus.textContent = 'Recognized: ' + transcript;
+          
+          // Auto-send the recognized text
+          setTimeout(() => {
+            sendMessage();
+          }, 500);
+        };
+
+        recognition.onerror = function(event) {
+          voiceInputButton.classList.remove('listening');
+          voiceStatus.textContent = 'Error: ' + event.error;
+          setTimeout(() => {
+            voiceStatus.classList.remove('show');
+          }, 2000);
+        };
+
+        recognition.onend = function() {
+          if (voiceInputButton.classList.contains('listening')) {
+            voiceInputButton.classList.remove('listening');
+          }
+          setTimeout(() => {
+            voiceStatus.classList.remove('show');
+          }, 2000);
+        };
+      }
+
+      // Auth Configuration (replace with your actual config)
+      const authConfig = {
+        apiBaseUrl: "https://api.yourdomain.com/v1/auth",
+        googleClientId: "YOUR_GOOGLE_CLIENT_ID",
+        facebookAppId: "YOUR_FACEBOOK_APP_ID",
+        appleClientId: "com.yourdomain.service",
+      };
+
+      // Initialize OAuth providers
+      function initializeAuthProviders() {
+        try {
+          // Google SDK
+          const googleScript = document.createElement("script");
+          googleScript.onerror = () => {
+            console.error("Failed to load Google SDK");
+            document.getElementById("googleLogin").disabled = true;
+          };
+          googleScript.src = "https://accounts.google.com/gsi/client";
+
+          // Facebook SDK
+          window.fbAsyncInit = function () {
+            try {
+              FB.init({
+                appId: authConfig.facebookAppId,
+                cookie: true,
+                xfbml: true,
+                version: "v12.0",
+              });
+            } catch (e) {
+              console.error("Facebook init error", e);
+              document.getElementById("facebookLogin").disabled = true;
+            }
+          };
+
+          const facebookScript = document.createElement("script");
+          facebookScript.onerror = () => {
+            console.error("Failed to load Facebook SDK");
+            document.getElementById("facebookLogin").disabled = true;
+          };
+          facebookScript.src = "https://connect.facebook.net/en_US/sdk.js";
+
+          document.head.append(googleScript, facebookScript);
+        } catch (e) {
+          console.error("Auth provider initialization error", e);
+        }
+      }
+
+      // Initialize when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize both auth and chart
+        initializeAuthProviders();
+        setupAuthHandlers();
+        initializeFinancialChart();
+        initializeDashboardCharts();
+        initAnimations();
+      });
+
+      function initializeDashboardCharts() {
+        // Market Trends Chart
+        const marketTrendsCtx = document.getElementById('marketTrendsChart').getContext('2d');
+        new Chart(marketTrendsCtx, {
+          type: 'line',
+          data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+              data: [4200, 4300, 4400, 4500, 4600, 4567],
+              borderColor: '#4ade80',
+              backgroundColor: 'rgba(74, 222, 128, 0.1)',
+              borderWidth: 2,
+              tension: 0.4,
+              fill: true,
+              pointRadius: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              x: { display: false },
+              y: { display: false }
+            }
+          }
+        });
+
+        // Stock Analysis Chart
+        const stockAnalysisCtx = document.getElementById('stockAnalysisChart').getContext('2d');
+        new Chart(stockAnalysisCtx, {
+          type: 'line',
+          data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+              data: [130, 135, 140, 142, 141, 142.5],
+              borderColor: '#f87171',
+              backgroundColor: 'rgba(248, 113, 113, 0.1)',
+              borderWidth: 2,
+              tension: 0.4,
+              fill: true,
+              pointRadius: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              x: { display: false },
+              y: { display: false }
+            }
+          }
+        });
+
+        // Investment Chart
+        const investmentCtx = document.getElementById('investmentChart').getContext('2d');
+        new Chart(investmentCtx, {
+          type: 'line',
+          data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+              data: [0, 2, 4, 5, 7, 8.5],
+              borderColor: '#3b82f6',
+              backgroundColor: 'rgba(59, 130, 246, 0.1)',
+              borderWidth: 2,
+              tension: 0.4,
+              fill: true,
+              pointRadius: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              x: { display: false },
+              y: { display: false }
+            }
+          }
+        });
+
+        // Portfolio Chart
+        const portfolioCtx = document.getElementById('portfolioChart').getContext('2d');
+        new Chart(portfolioCtx, {
+          type: 'line',
+          data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            datasets: [{
+              data: [22000, 22500, 23000, 23500, 24000, 24567],
+              borderColor: '#8b5cf6',
+              backgroundColor: 'rgba(139, 92, 246, 0.1)',
+              borderWidth: 2,
+              tension: 0.4,
+              fill: true,
+              pointRadius: 0
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              x: { display: false },
+              y: { display: false }
+            }
+          }
+        });
+      }
+
+      function checkExistingSession() {
+        const token = localStorage.getItem("authToken");
+        if (token) {
+          // Verify token with backend in real implementation
+          const nav = document.querySelector("nav");
+          const loginLink = nav.querySelector('a[onclick="openModal()"]');
+          if (loginLink) {
+            loginLink.innerHTML = `<i class="fas fa-user"></i> Account`;
+            loginLink.onclick = null;
+            loginLink.href = "#";
+            loginLink.style.pointerEvents = "none";
+          }
+        }
+      }
+
+      // Add to DOMContentLoaded
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeAuthProviders();
+        setupAuthHandlers();
+        checkExistingSession();
+      });
+
+      function setupAuthHandlers() {
+        // Email/Password Login
+        document
+          .getElementById("emailLoginForm")
+          .addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const email = document.getElementById("loginEmail").value.trim();
+            const password = document
+              .getElementById("loginPassword")
+              .value.trim();
+
+            try {
+              const response = await fetch(`${authConfig.apiBaseUrl}/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+              });
+
+              const data = await response.json();
+
+              if (response.ok) {
+                handleSuccessfulAuth(data.token, data.user);
+              } else {
+                showAuthError(data.message || "Login failed");
+              }
+            } catch (error) {
+              showAuthError("Network error. Please try again.");
+            }
+          });
+
+        // Forgot Password
+        document
+          .getElementById("forgotPasswordForm")
+          .addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const email = document.getElementById("resetEmail").value.trim();
+
+            try {
+              const response = await fetch(
+                `${authConfig.apiBaseUrl}/forgot-password`,
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ email }),
+                }
+              );
+
+              if (response.ok) {
+                alert("Password reset link sent to your email");
+                closeForgotPassword();
+              } else {
+                const data = await response.json();
+                showAuthError(data.message || "Failed to send reset link");
+              }
+            } catch (error) {
+              showAuthError("Network error. Please try again.");
+            }
+          });
+
+        // Signup
+        document
+          .getElementById("signupForm")
+          .addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const name = document.getElementById("signupName").value.trim();
+            const email = document.getElementById("signupEmail").value.trim();
+            const password = document.getElementById("signupPassword").value;
+            const confirmPassword = document.getElementById(
+              "signupConfirmPassword"
+            ).value;
+
+            if (password !== confirmPassword) {
+              showAuthError("Passwords do not match");
+              return;
+            }
+
+            try {
+              const response = await fetch(
+                `${authConfig.apiBaseUrl}/register`,
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ name, email, password }),
+                }
+              );
+
+              const data = await response.json();
+
+              if (response.ok) {
+                handleSuccessfulAuth(data.token, data.user);
+              } else {
+                showAuthError(data.message || "Registration failed");
+              }
+            } catch (error) {
+              showAuthError("Network error. Please try again.");
+            }
+          });
+      }
+
+      // Google OAuth
+      function initiateGoogleLogin() {
+        const button = document.getElementById("googleLogin");
+        button.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Connecting...`;
+        button.disabled = true;
+
+        // Google Identity Services
+        google.accounts.id.initialize({
+          client_id: authConfig.googleClientId,
+          callback: handleGoogleCredentialResponse,
+        });
+
+        google.accounts.id.prompt((notification) => {
+          if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+            button.innerHTML = `<i class="fab fa-google"></i> Google`;
+            button.disabled = false;
+          }
+        });
+      }
+
+      function handleGoogleCredentialResponse(response) {
+        // Verify the credential with your backend
+        verifyOAuthToken("google", response.credential)
+          .then((data) => handleSuccessfulAuth(data.token, data.user))
+          .catch((error) => showAuthError(error.message));
+      }
+
+      // Facebook OAuth
+      function initiateFacebookLogin() {
+        const button = document.getElementById("facebookLogin");
+        button.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Connecting...`;
+        button.disabled = true;
+
+        FB.login(
+          function (response) {
+            if (response.authResponse) {
+              verifyOAuthToken("facebook", response.authResponse.accessToken)
+                .then((data) => handleSuccessfulAuth(data.token, data.user))
+                .catch((error) => showAuthError(error.message))
+                .finally(() => {
+                  button.innerHTML = `<i class="fab fa-facebook-f"></i> Facebook`;
+                  button.disabled = false;
+                });
+            } else {
+              button.innerHTML = `<i class="fab fa-facebook-f"></i> Facebook`;
+              button.disabled = false;
+            }
+          },
+          { scope: "public_profile,email" }
+        );
+      }
+
+      // Apple OAuth
+      function initiateAppleLogin() {
+        const button = document.getElementById("appleLogin");
+        button.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Connecting...`;
+        button.disabled = true;
+
+        // Apple doesn't provide a direct JS SDK, you would:
+        // 1. Create a hidden form with Apple's OAuth endpoint
+        // 2. Submit it to initiate the flow
+        // 3. Handle the callback on your backend
+        // This is a simplified version for demo
+
+        window.AppleID.auth.init({
+          clientId: authConfig.appleClientId,
+          scope: "name email",
+          redirectURI: `${window.location.origin}/auth/apple/callback`,
+          usePopup: true,
+        });
+
+        window.AppleID.auth
+          .signIn()
+          .then((data) => {
+            if (data.authorization) {
+              return verifyOAuthToken("apple", data.authorization.code);
+            }
+            throw new Error("Apple login failed");
+          })
+          .then((data) => handleSuccessfulAuth(data.token, data.user))
+          .catch((error) =>
+            showAuthError(error.message || "Apple login failed")
+          )
+          .finally(() => {
+            button.innerHTML = `<i class="fab fa-apple"></i> Apple`;
+            button.disabled = false;
+          });
+      }
+
+      // Verify OAuth token with backend
+      async function verifyOAuthToken(provider, token) {
+        const response = await fetch(
+          `${authConfig.apiBaseUrl}/oauth/${provider}`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token }),
+          }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.message || "Authentication failed");
+        }
+
+        return data;
+      }
+
+      // Handle successful authentication
+      function handleSuccessfulAuth(token, user) {
+        // Store token (in secure HttpOnly cookie in production)
+        localStorage.setItem("authToken", token);
+
+        // Update UI
+        const nav = document.querySelector("nav");
+        const loginLink = nav.querySelector('a[onclick="openModal()"]');
+
+        if (loginLink) {
+          loginLink.innerHTML = `<i class="fas fa-user"></i> ${
+            user.name || user.email.split("@")[0]
+          }`;
+          loginLink.onclick = null;
+          loginLink.href = "#";
+          loginLink.style.pointerEvents = "none";
+        }
+
+        // Close all modals
+        closeModal();
+        closeForgotPassword();
+        closeSignupForm();
+
+        // Show welcome message
+        alert(`Welcome back, ${user.name || user.email}!`);
+
+        // In a real app, you would:
+        // 1. Redirect to dashboard
+        // 2. Fetch user-specific data
+        // 3. Update application state
+      }
+
+      // Error handling
+      function showAuthError(message) {
+        alert(`Error: ${message}`);
+      }
+
+      // Modal controls
+      function showForgotPassword() {
+        closeModal();
+        document.getElementById("forgotPasswordModal").style.display = "block";
+        document.getElementById("modalOverlay").style.display = "block";
+      }
+
+      function closeForgotPassword() {
+        document.getElementById("forgotPasswordModal").style.display = "none";
+        document.getElementById("modalOverlay").style.display = "none";
+      }
+
+      function showSignupForm() {
+        closeModal();
+        document.getElementById("signupModal").style.display = "block";
+        document.getElementById("modalOverlay").style.display = "block";
+      }
+
+      function closeSignupForm() {
+        document.getElementById("signupModal").style.display = "none";
+        document.getElementById("modalOverlay").style.display = "none";
+      }
+      // Initialize Financial Chart
+      function initializeFinancialChart() {
+        const ctx = document.getElementById("financialChart").getContext("2d");
+
+        const data = {
+          labels: ["2023", "2024", "2025", "2026", "2027", "2028", "2029"],
+          datasets: [
+            {
+              label: "Revenue",
+              data: [40000, 55000, 70000, 90000, 110000, 130000, 150000],
+              borderColor: "#4ade80",
+              backgroundColor: "rgba(74, 222, 128, 0.1)",
+              tension: 0.3,
+              fill: true,
+            },
+            {
+              label: "Expenses",
+              data: [25000, 35000, 40000, 45000, 50000, 55000, 60000],
+              borderColor: "#f59e0b",
+              backgroundColor: "rgba(245, 158, 11, 0.1)",
+              tension: 0.3,
+              fill: true,
+            },
+            {
+              label: "Net Income",
+              data: [15000, 20000, 30000, 45000, 60000, 75000, 90000],
+              borderColor: "#3b82f6",
+              backgroundColor: "rgba(59, 130, 246, 0.1)",
+              tension: 0.3,
+              fill: true,
+            },
+          ],
+        };
+
+        const config = {
+          type: "line",
+          data: data,
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "top",
+                labels: {
+                  color: "white",
+                  font: {
+                    family: "Poppins",
+                  },
+                },
+              },
+              tooltip: {
+                mode: "index",
+                intersect: false,
+                backgroundColor: "rgba(0,0,0,0.8)",
+                titleFont: {
+                  family: "Poppins",
+                  size: 14,
+                },
+                bodyFont: {
+                  family: "Poppins",
+                  size: 12,
+                },
+              },
+            },
+            scales: {
+              x: {
+                grid: {
+                  color: "rgba(255, 255, 255, 0.1)",
+                },
+                ticks: {
+                  color: "white",
+                },
+              },
+              y: {
+                grid: {
+                  color: "rgba(255, 255, 255, 0.1)",
+                },
+                ticks: {
+                  color: "white",
+                  callback: function (value) {
+                    return "$" + value.toLocaleString();
+                  },
+                },
+              },
+            },
+            interaction: {
+              mode: "nearest",
+              axis: "x",
+              intersect: false,
+            },
+            maintainAspectRatio: false,
+          },
+        };
+
+        new Chart(ctx, config);
+
+        // Close modals when clicking outside
+        const modals = [
+          "modalOverlay",
+          "financialModalOverlay",
+          "communityModalOverlay",
+        ];
+        modals.forEach((modalId) => {
+          document
+            .getElementById(modalId)
+            .addEventListener("click", function () {
+              document.getElementById(
+                modalId.replace("Overlay", "")
+              ).style.display = "none";
+              this.style.display = "none";
+            });
+        });
+      }
+    </script>
+  </body>
+</html>
